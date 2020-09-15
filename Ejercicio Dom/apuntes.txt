@@ -1,0 +1,9 @@
+permitir ejecucion de scripts en el sistema (windows 10)
+
+-abrir windows sell como administrador
+-ejecutar comando: Set-ExecutionPolicy Unrestricted
+-ejecutar comando: S
+
+Ejecutar json server (ejemplo realizado video 112):
+
+-ejecuto comando: json-server -w -p 5555 assets/db.json

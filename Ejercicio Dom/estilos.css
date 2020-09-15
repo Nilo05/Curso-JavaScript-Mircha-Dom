@@ -1,0 +1,572 @@
+/********** Reset css**************/
+:root{
+
+	--main-font: sans-serif;
+	--font-size: 16px;
+	--main-color: #f7df1e;
+	--second-color: #222;
+	--main-modal-color: rgba(247, 222, 30, 0.85);
+	--second-modal-color: rgba(34, 34, 34, 0.85);
+	--container-width: 1200px;
+}
+
+html {
+	/* tamaño a partir del borde (sobre le modelo de caja)*/
+	box-sizing: border-box;
+	font-family: var(--main-font);
+	font-size: var(--font-size);
+	scroll-behavior: smooth;  /*transicion no subita al scroll*/
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	margin: 0;
+	overflow-x: hidden; /*Para que no aparezca barra horizontal*/
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/******* Menu de Hamburguesa ************/
+
+.header {
+	position:sticky;   /*para que el header se quede pegado en la parte superior*/
+	top:0;
+	z-index: 997;
+	padding: 1rem;
+	background-color: var(--main-color);
+	color: var(--second-color);
+}
+
+.header h1 {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.section {
+	padding: 2rem;
+	padding-top: 4rem;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	max-width: var(--container-width);
+	/* ancho minimo tamaño de la ventana. Para que solo una seccion este en pantalla */
+	min-height: 100vh;
+	text-align: center;
+}
+
+.panel {
+	/* panel fijo */
+	position: fixed;
+	/* panel por debajo del boton (en profundidad)*/
+	z-index: 998;
+	/* estirar el contenido que ya esta fijo a toda la pantalla*/
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	/* par que aparezcan todas las opciones en el menu
+	ajusta contenido que desborda. agrega scroll*/
+	overflow-y: auto;
+	/* se da ancho de 100% porque se pierde ancho y 
+	y alto con el fixed (elemento fijo)*/
+	width: 100%;
+	background-color: var(--second-modal-color);
+	opacity: 0;
+	/* se debe usar con opaciti por que queda interactividad
+	aun cuando no aparece el panel*/
+	visibility: hidden;
+	/* velocidad de trnasicion */
+	transition: transform 0.5s ease,opacity 0.5s ease;
+	/* para que el menu salga de cualquier lado*/
+	/* De arriba */
+	transform: translate(0, -100%);
+	/* De abajo */
+	transform: translate(0, 100%);
+	/* De derecha */
+	transform: translate(100%, 0);
+	/* De izquierda */
+	transform: translate(-100%, 0);
+}
+
+.panel.is-active {
+	transform: translate(0, 0);
+	opacity: 1;
+	/* se debe usar con opacity*/
+	visibility: visible;
+}
+
+.panel-btn {
+	/* posicion fija segun 1vh y 1vw esquina derecha inferior*/
+	position: fixed;
+	/* cuanto position !== de static se puede jugar con la profundidad*/
+	/* con este valor en z-index se busca que todo el contenido quede 
+	debajo del boton */
+	z-index: 999;
+	bottom: 1vh;
+	right: 1vw;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	padding: 0;
+	/* aplicacion de flex-fox para que las lines esten bien centradas*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--main-color);
+}
+
+
+.menu {
+	/* herede ancho del padre (panel)*/
+	width: inherit;
+	/* aplicacion de flex-box*/
+	display: flex;
+		/* En columna */
+	flex-direction: column;
+		/* espaciado alrededor de cada elemento */
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
+}
+
+.menu a {
+	padding: 2rem;
+	/* hereden tamaño */
+	width: inherit;
+	display: block;
+	font-size: 1.5rem;
+	text-decoration: none;
+	color: var(--main-color);
+	/* que no sea subita la transicion */
+	transition: all 0.3s ease;
+}
+
+.menu a:hover {
+	font-weight: bold;
+	/* invierte color de fondo y de texto*/
+	color: var(--second-color);
+	background-color: var(--main-modal-color);
+}
+
+/********* Reloj y alarma sonora *****************/
+
+.reloj {
+	font-size: 4rem;
+}
+
+.section button {
+	font-size: 1rem;
+	color: black;
+	padding-top:.8rem;
+	padding-bottom: .8rem;
+	padding-left:2rem;
+	padding-right:2rem;
+	background-color: var(--main-color);
+	border-color: #d8d8d8;
+	border-width: .3rem;
+	border-style: solid;
+	border-radius:35px;
+}
+
+.section button:hover{
+	background-color: rgb(149, 155, 71);
+}
+
+.section #activar-reloj:focus, 
+.section #activar-alarma:focus {
+	background-color: rgb(149, 155, 71);
+}
+
+/********* Eventos del teclado ************/
+
+.stage {
+	display: flex;
+	min-height: 50vh;
+	background-color: var(--second-color);
+	border: solid;
+	border-color: var(--main-color);
+}
+
+.ball {
+	margin: auto;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	background-color: var(--main-color);
+}
+
+/********* ScrollTopButton ******************************/
+.scroll-top-btn {
+	position: fixed;
+	z-index: 999;
+	bottom: 1vh;
+	right: calc(4.25rem + 1vw);
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	font-size: 2rem;
+	font-weight: bold;
+	background-color: var(--main-color);
+	color: var(--second-color);
+	cursor: pointer;
+	outline: 0;
+	border: 0;
+	transition: all 0.3s ease-out;
+}
+
+.scroll-top-btn:hover{
+	background-color: var(--second-color);
+	color: var(--main-color);
+}
+
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+}
+
+/********* DarkThemeButton ******************************/
+.dark-theme-btn {
+	position: fixed;
+	z-index: 999;
+	bottom: 1vh;
+	left:  1vw;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	font-size: 2rem;
+	font-weight: bold;
+	background-color: var(--main-color);
+	color: var(--second-color);
+	cursor: pointer;
+	outline: 0;
+	border: 0;
+	transition: all 0.3s ease-out;
+}
+
+.dark-theme-btn:hover{
+	background-color: var(--second-color);
+	color: var(--main-color);
+}
+
+.dark-mode{
+	background-color: var(--second-color);
+	color: var(--main-color);
+}
+
+/*********** Responsive Tester **********/
+
+.formResponsive{
+	margin: 2rem;
+	padding: 2rem;
+	background: var(--second-color);
+	border: thick solid #f7df1e;
+	border-radius: 2rem;
+}
+
+.direccion, .ancho, .alto {
+	margin: auto;
+	padding: .8rem;
+	width: 80%;
+	height: auto;
+	border-radius: 1rem;
+}
+
+
+.probar, .cerrar {
+	font-size: 1rem;
+	color: black;
+	padding-top:.8rem;
+	padding-bottom: .8rem;
+	padding-left:2rem;
+	padding-right:2rem;
+	background-color: var(--main-color);
+	border-color: #d8d8d8;
+	border-width: .3rem;
+	border-style: solid;
+	border-radius:35px;
+}
+
+/****** Estado de conexion *******/
+
+.online,
+.offline {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	padding: 1rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: center;
+	background-color: #1b5e20;
+	color: #fff;
+}
+
+.offline {
+	background-color: #b71c1c;
+}
+
+/*********** Filtros de busqueda *****************/
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit,minmax(250px, 1fr));	
+}
+
+.card {
+	background-color: var(--second-color);
+	color: var(--main-color);
+	transition: all 0.3s ease-out;
+}
+
+.card img {
+	width: 100%;
+	height: auto;
+}
+
+.card figcaption {
+	padding: 1rem;
+}
+
+.filter {
+	/* display: none; */
+	visibility: hidden;
+	opacity: 0;
+	order: 1;
+}
+
+/******* Responsive Slider ***********/
+
+.slider {
+	position: relative;
+	width: 80%;
+	margin: 1rem auto;
+	text-align: center;
+}
+
+.slider-slides {
+	position: relative;
+	/* Hay que definir una altura del slider como 
+	referencia para saber la altura del contenido */
+	height: 400px;
+}
+
+.slider-slide {
+	/* absoluto para que tome como referencia el primer padre relative */
+	position: absolute;
+	/* se ajusta al contenedor */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/* para que no se vean y no interactuen las imagenes */
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1s ease;
+}
+
+.slider-slide img {
+	/* con inherir hereda el tamaño para que no se recorte la imagen 
+	y ademas sea responsiva. pero se pude ver alargada */
+	height: inherit;
+	width: inherit;
+	/* Para ajustar la proporcion de la imagen a su contenedor se usa
+	lo siguiente object-fit. content para ajustar en y cover para ajusta 
+	en x */
+	object-fit: cover;
+	/* para mover la imagen dentro del contenedor para que se vea la 
+	parte mas importante se juega con object-position: anchoen% altoen%; */
+	object-position: 50% 20%;
+}
+
+.slider-slide.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.slider-btns {
+	/* absoluto dentro del primer elemento padre relative */
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	display: flex;
+	justify-content: space-between;
+	font-size: 3rem;
+	font-weight: bold;
+}
+
+.slider a {
+	display: block;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	border: thin solid #000;
+	text-decoration: none;
+	background-color: #fff;
+	color: #000;
+	transition: all 0.3s ease;
+
+}
+
+.slider a:hover {
+	color:#4d4d4d;
+}
+
+/******* ScrollSpy **********/
+
+@media screen and (min-width: 1024px){
+	body {
+		display: grid;
+		/* Se definen las columnas */
+		grid-template-columns: 80% 20%;
+		/* se definen las filas. la primera del tamaño de la cabecera
+		y la segunda automatica  */
+		grid-template-rows: 4rem auto;
+		/* esquema */
+		grid-template-areas: 
+		"header header"
+		"main   panel";
+	}
+
+	main {
+		grid-area: main;	
+	}
+
+	.header {
+		grid-area: header;
+	}
+
+	.panel {
+		grid-area: panel;
+		position: sticky;
+		top: 4rem;
+		/* para que se alinie donde empieza el contenido */
+		align-self: start;
+		justify-content: flex-start;
+		background: var(--second-color);
+		transform: translate(0, 0);
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.panel-btn {
+		display: none;
+	}
+
+	.menu {
+		justify-content: start;
+		text-align: right;
+	}
+
+	.menu a {
+		font-size: 1rem;
+		padding: .75rem;
+	}
+
+	.menu a:hover, 
+	.menu a.active {
+		color: var(--second-color);
+		background-color: var(--main-color);		
+	}
+
+	.scroll-top-btn {
+		right: initial;
+		left: calc(4.25rem + 1vw);
+	}
+
+	/* borde para observar los procentajes de visualizacion */
+	/* .section {
+		border: thin solid red;
+	} */
+
+}
+
+/***************** ContactForm Validations ******************/
+
+.contact-form {
+	--form-ok-color: #4caf50;
+	--form-error-color: #f44336;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+}
+
+.contact-form > * {
+	padding: 0.5rem;
+	margin: 1rem auto;
+	display: block;
+	width: 100%;
+}
+
+.contact-form textarea {
+	resize: none;
+}
+
+.contact-form legend,
+.contact-form-response {
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+.contact-form input,
+.contact-form textarea {
+	font-size: 1rem;
+	font-family: sans-serif;
+}
+
+.contact-form input[type="submit"] {
+	width: 50%;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.contact-form *::placeholder {
+	color: #000;
+}
+
+.contact-form [required]:valid {
+	border: thin solid var(--form-ok-color);
+}
+
+.contact-form [required]:invalid {
+	border: thin solid var(--form-error-color);
+}
+
+.contact-form-error {
+	margin-top: -1rem;
+	font-size: 80%;
+	background-color: var(--form-error-color);
+	color: #fff;
+	transition: all 800ms ease;
+}
+
+.contact-form-error.is-active {
+	display: block;
+	/* nombreAnimacion duracion seRepeite tipoRepeticion retardo 
+	Aceleracion both(conserva estilo final animacion)*/
+	animation: show-message 1s 1 normal 0s ease-in-out both;
+}
+
+.none {
+	display: none;
+}
+
+@keyframes show-message {
+	0% {
+		visibility: hidden;
+		opacity: 0;
+	}
+
+	100% {
+		visibility: visible;
+		opacity: 1;
+	}
+}
